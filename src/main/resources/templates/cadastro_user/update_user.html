@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Dados do Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Atualizar Dados do Usuário</h1>
+        <!-- Formulário para atualizar dados do usuário -->
+        <form th:action="@{/usuarios/atualizar}" th:object="${usuario}" method="post">
+		    
+		    <div>
+			    <!--<label for="id">Id:</label>-->
+			    <input 
+			        type="text" 
+			        id="id" 
+			        th:field="*{id}" 
+			        placeholder="Digite o nome do usuário" 
+			        required 
+			        readonly 
+			        style="width: calc(1ch + 2ch * (10));" 
+			        oninput="this.style.width = 'calc(1ch + 2ch * (' + (this.value.length || 1) + '))';"
+			    />		   
+			</div>
+
+		    
+		    
+		    <div>
+		        <label for="nome">Nome:</label>
+		        <input type="text" id="nome" th:field="*{nome}" placeholder="Digite o nome do usuário" required />
+		    </div>
+		
+		    <div>
+		        <label for="sobrenome">Sobrenome:</label>
+		        <input type="text" id="sobrenome" th:field="*{sobrenome}" placeholder="Digite o sobrenome do usuário" required />
+		    </div>
+		
+		    		
+		    <div>
+		        <label for="email">Email:</label>
+		        <input type="email" id="email" th:field="*{email}" placeholder="Digite o email do usuário" required />
+		    </div>
+		
+		    <div>
+		        <label for="senha">Senha:</label>
+		        <input type="password" id="senha" th:field="*{senha}" placeholder="Digite a senha do usuário" required />
+		    </div>
+		
+		    <div>
+		        <label for="setor">Setor:</label>
+		        <input type="text" id="setor" th:field="*{setor}" placeholder="Digite o setor do usuário" required />
+		    </div>
+		
+		   
+		
+		    <button type="submit">Atualizar</button>
+		</form>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

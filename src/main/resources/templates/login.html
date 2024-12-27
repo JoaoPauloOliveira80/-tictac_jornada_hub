@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+        }
+
+        /* Fundo com gradiente e estrelas */
+        body {
+            background: linear-gradient(to bottom, #00264d, #004080, #0073e6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .background .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        /* Animação de cintilação */
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Cartão de login */
+        .card {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Estilo do card da mensagem */
+        .mensagem-card {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .mensagem-card .card-body {
+            background-color: #28a745; /* Verde */
+            color: white;
+            text-align: center; /* Centraliza o texto */
+            padding: 15px;
+        }
+
+        /* Estilo do texto dentro do card */
+        .mensagem-card .card-body p {
+            margin: 0; /* Remove margens para centralizar melhor */
+        }
+    </style>
+</head>
+<body class="bg-light">
+   
+   <!-- Inserindo o fragmento do céu estrelado -->
+	<div th:replace="~{fragments/ceu_estrelado :: ceu-estrelado}"></div>
+
+    <!-- Exibindo a mensagem, se houver -->
+    <div th:if="${mensagem}" class="mensagem-card" id="mensagemCard">
+        <div class="card">
+            <div class="card-body">
+                <p th:text="${mensagem}"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container de login -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Bem-vindo de Volta!</h2>
+                <form action="/usuarios/login" method="POST">
+                    <!-- CSRF Token -->
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Digite seu email" required>
+                    </div>
+
+                    <!-- Senha -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Digite sua senha" required>
+                    </div>
+
+                    <!-- Botão de Login -->
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Entrar</button>
+
+                    <!-- Exibir erro, se houver -->
+                    <div th:if="${param.error}" class="mt-3">
+                        <p class="text-danger text-center">Usuário ou senha inválidos.</p>
+                    </div>
+                </form>
+
+                <!-- Link de cadastro -->
+				<div class="text-center mt-3">
+				    <small>Não tem uma conta? <a href="/usuarios/cadastro">Cadastre-se</a></small>
+				</div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Função para remover o card de mensagem após 5 segundos
+        setTimeout(function() {
+            var mensagemCard = document.getElementById('mensagemCard');
+            if (mensagemCard) {
+                mensagemCard.style.display = 'none'; // Esconde o card
+            }
+        }, 000); // 5000ms = 5 segundos
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <style>
+        /* Reset básico */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Fundo estrelado */
+        body {
+            background: linear-gradient(to bottom, #00264d, #004080, #0073e6);
+            color: white;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .background .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        /* Animação de cintilação */
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Container do formulário */
+        .container {
+            background-color: #fff;  /* Cor de fundo branco */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.2);  /* Leve sombra para destacar */
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;  /* Cor mais suave para o título */
+            text-shadow: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;  /* Cor mais escura para os rótulos */
+            margin-bottom: 5px;  /* Espaço entre label e input */
+        }
+
+        .form-control {
+            background-color: #f8f8f8;  /* Fundo claro para os campos */
+            color: #333;  /* Texto escuro para melhor contraste */
+            border: 1px solid #ccc;  /* Bordas sutis */
+            border-radius: 5px;
+            padding: 12px;
+            margin-top: 5px;
+            transition: background-color 0.3s, border-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;  /* Garante que a largura dos inputs se ajuste corretamente */
+        }
+
+        .form-control:focus {
+            background-color: #fff;  /* Clareamento no foco */
+            border-color: #0073e6;  /* Borda azul quando em foco */
+            outline: none;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #0073e6;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-sizing: border-box;  /* Garante que o botão tenha o mesmo tamanho */
+        }
+
+        .btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Estilo para Senha e Confirmar Senha na mesma linha */
+        .senha-group {
+            display: flex;
+            gap: 10px;  /* Espaçamento entre os campos */
+        }
+
+        .senha-group .form-group {
+            flex: 1;  /* Faz os inputs terem o mesmo tamanho */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Inserindo o fragmento do céu estrelado -->
+    <div th:replace="~{fragments/ceu_estrelado :: ceu-estrelado}"></div>
+
+    <!-- Container central -->
+    <div class="container">
+        <h1>Cadastro de Usuário</h1>
+
+        <!-- Formulário de cadastro -->
+        <form th:action="@{/usuarios/cadastro}" th:object="${usuario}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" class="form-control" placeholder="Digite seu nome" required>
+            </div>
+            <div class="form-group">
+                <label for="sobrenome">Sobrenome:</label>
+                <input type="text" id="sobrenome" th:field="*{sobrenome}" class="form-control" placeholder="Digite seu sobrenome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Digite seu e-mail" required>
+            </div>
+            <div class="form-group">
+                <label for="setor">Setor:</label>
+                <input type="text" id="setor" th:field="*{setor}" class="form-control" placeholder="Digite seu setor" required>
+            </div>
+
+            <!-- Senha e Confirmar Senha na mesma linha -->
+            <div class="senha-group">
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" th:field="*{senha}" class="form-control" placeholder="Crie uma senha" required>
+                </div>
+                
+            </div>
+            
+            <div id="error-message" class="error-message" style="display: none;">As senhas devem ser iguais.</div>
+
+
+            <button type="submit" class="btn">Cadastrar</button>
+        </form>
+    </div>
+    
+    
+</body>
+</html>

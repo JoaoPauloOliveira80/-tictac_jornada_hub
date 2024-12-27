@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Bem-vindo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .welcome-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .welcome-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .logout-btn, .update-btn, .deactivate-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .logout-btn:hover, .update-btn:hover, .deactivate-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .deactivate-btn {
+            background-color: #f39c12;
+        }
+
+        .deactivate-btn:hover {
+            background-color: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-card">
+            <h1>Bem-vindo, <span th:text="${usuario.nome}"></span>!</h1>
+            <p>Sobrenome: <span th:text="${usuario.sobrenome}"></span></p>
+            <p>Email: <span th:text="${usuario.email}"></span></p>
+            
+            <!-- Botão para atualizar os dados do usuário -->
+            <a th:href="@{/usuarios/pag_user}" class="update-btn">Atualizar Dados</a>
+
+            <!-- Formulário para desativar o usuário -->
+            <form th:action="@{/usuarios/desativar}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" th:name="email" th:value="${usuario.email}" />
+                <button type="submit" class="deactivate-btn">Desativar Conta</button>
+            </form>
+
+            <!-- Formulário de logout com CSRF gerado automaticamente -->
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
