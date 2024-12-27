@@ -49,6 +49,7 @@ public class UsuarioController {
 //		return new ModelAndView("login");
 //	}
 
+	// do git hub junto com git lab
 	@GetMapping("/login")
 	public ModelAndView login(
 	        @RequestParam(value = "error", required = false) String error,
